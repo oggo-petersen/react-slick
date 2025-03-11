@@ -2,7 +2,7 @@
 
 var gulp = require("gulp");
 var del = require("del");
-var sass = require("gulp-sass");
+var sass = require("gulp-sass")(require("sass"));
 var webpack = require("webpack");
 var WebpackDevServer = require("webpack-dev-server");
 var assign = require("object-assign");
@@ -35,9 +35,8 @@ gulp.task("sass", function() {
     .src(["./docs/**/*.{scss,sass}"])
     .pipe(
       sass({
-        includePaths: ["bower_components", "node_modules"],
-        errLogToConsole: true
-      })
+        includePaths: ["node_modules"]
+      }).on("error", sass.logError)
     )
     .pipe(gulp.dest("./build"));
 });
